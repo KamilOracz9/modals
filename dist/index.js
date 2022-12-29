@@ -1,4 +1,4 @@
-// import Modal from "./Modal.js";
+import Modal from "./Modal.js";
 // var button = document.createElement('button');
 // button.innerHTML = 'asdasdasdasd';
 // var form = document.createElement('form');
@@ -16,4 +16,5 @@
 //     submitSelector: '.create-submit', // If selected type is form, this button send request to backend
 //   }
 // });
-export { default as Modal } from './Modal.js';
+// export {default as Modal} from './Modal.js';
+module.exports = { Modal };
