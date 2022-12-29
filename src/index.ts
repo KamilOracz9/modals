@@ -1,4 +1,4 @@
-// import Modal from "./Modal.js";
+import Modal from "./Modal.js";
 
 // var button = document.createElement('button');
 // button.innerHTML = 'asdasdasdasd';
@@ -21,4 +21,6 @@
 //   }
 // });
 
-export {default as Modal} from './Modal.js';
+// export {default as Modal} from './Modal.js';
+
+module.exports = { Modal };
