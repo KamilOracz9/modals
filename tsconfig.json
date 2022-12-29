@@ -1,0 +1,9 @@
+{
+    "compilerOptions": {
+        "target": "esnext",
+        "watch": true,
+        "lib": ["DOM", "es2016"],
+        "rootDir": "./src",
+        "outDir": "./dist",
+    }
+}
