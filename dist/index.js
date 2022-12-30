@@ -118,27 +118,24 @@ var Modal = /** @class */ (function () {
             if (!form.getAttribute('action'))
                 console.error('Form action is null');
             else {
-                fetch(form.action, {
-                    method: form.method,
-                    body: formData,
+                $.ajax({
+                    method: "POST",
+                    url: form.action,
+                    data: formData,
                     headers: {
                         'X-CSRF-Token': csrfToken ? csrfToken.value : '',
                     },
+                    cache: false,
                     contentType: false,
                     processData: false,
-                })
-                    .then(function (response) {
-                    _this.removeErrors();
-                    window.location.reload();
-                })
-                    .catch(function (response) {
-                    console.log(response);
-                    if (typeof (response.responseText) !== 'json') {
-                        console.error('Response from backend is not valid json');
-                        return false;
-                    }
-                    _this.removeErrors();
-                    _this.displayErrors(form, JSON.parse(response.responseText).errors);
+                    success: function (response) {
+                        _this.removeErrors();
+                        window.location.reload();
+                    },
+                    error: function (response) {
+                        _this.removeErrors();
+                        _this.displayErrors(form, JSON.parse(response.responseText).errors);
+                    },
                 });
             }
         };

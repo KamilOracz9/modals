@@ -115,28 +115,25 @@ class Modal implements ModalInterface
 
         if(!form.getAttribute('action')) console.error('Form action is null');
         else{
-            fetch(form.action, {
-                method: form.method,
-                body: formData,
+            $.ajax({
+                method: "POST",
+                url: form.action,
+                data: formData,
                 headers: {
                     'X-CSRF-Token': csrfToken ? csrfToken.value : '',
                 },
+                cache: false,
                 contentType: false,
                 processData: false,
-            })
-            .then(response => {
-                this.removeErrors();
-                window.location.reload();
-            })
-            .catch(response => {
-                console.log(response);
-                if(typeof(response.responseText) !== 'json'){
-                    console.error('Response from backend is not valid json');
-                    return false;
-                }
-                this.removeErrors();
-                this.displayErrors(form, JSON.parse(response.responseText).errors);
-            })
+                success: response => {
+                    this.removeErrors();
+                    window.location.reload();
+                },
+                error: response => {
+                    this.removeErrors();
+                    this.displayErrors(form, JSON.parse(response.responseText).errors);
+                },
+            });
         }
     }
 
