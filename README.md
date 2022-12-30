@@ -4,7 +4,7 @@ Package to create modal
 
 ## Installation
 
-Via NPM: npm install kamiloracz9/modals
+Via NPM: npm i kamiloracz_modals
 
 Via CDN: https://cdn.jsdelivr.net/gh/KamilOracz9/modals@1.0.5/dist/index.js
 
