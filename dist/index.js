@@ -46,7 +46,6 @@ var __spreadArray = (this && this.__spreadArray) || function (to, from, pack) {
 var Modal = /** @class */ (function () {
     function Modal(_a) {
         var _b = _a === void 0 ? {} : _a, _c = _b.buttonSelector, buttonSelector = _c === void 0 ? '' : _c, _d = _b.type, type = _d === void 0 ? '' : _d, _e = _b.options, options = _e === void 0 ? {
-            url: '',
             content: null,
             submitSelector: null,
         } : _e;
@@ -60,28 +59,22 @@ var Modal = /** @class */ (function () {
                     console.error('The modal open button does not exist');
                 else {
                     _this.buttons.forEach(function (button) {
-                        button.addEventListener('click', _this.openModal);
+                        button.addEventListener('click', function (e) { return _this.openModal(e); });
                     });
                 }
             }
         };
-        this.openModal = function () {
+        this.openModal = function (e) {
             $(_this.modal).modal('show');
-        };
-        this.createDefaultModal = function (content) {
-            _this.createModal();
-            _this.setContent(content);
-        };
-        this.createFormModal = function (url, content, submitSelector) {
-            _this.createModal();
+            var url = e.currentTarget.dataset.url;
             if (url) {
                 _this.getHtmlForm(url).then(function (html) {
                     _this.setContent(html);
-                    if (!submitSelector) {
+                    if (!_this.options.submitSelector) {
                         console.error('Submit selector is not defined');
                     }
                     else {
-                        var submitButtons = _this.modal.querySelectorAll(submitSelector);
+                        var submitButtons = _this.modal.querySelectorAll(_this.options.submitSelector);
                         if (!submitButtons.length) {
                             console.error('Submit selector does not exisit');
                         }
@@ -94,12 +87,12 @@ var Modal = /** @class */ (function () {
                 });
             }
             else {
-                _this.setContent(content);
-                if (!submitSelector) {
+                _this.setContent(_this.options.content);
+                if (!_this.options.submitSelector) {
                     console.error('Submit selector is not defined');
                 }
                 else {
-                    var submitButtons = _this.modal.querySelectorAll(submitSelector);
+                    var submitButtons = _this.modal.querySelectorAll(_this.options.submitSelector);
                     if (!submitButtons.length) {
                         console.error('Submit selector does not exisit');
                     }
@@ -110,6 +103,12 @@ var Modal = /** @class */ (function () {
                     }
                 }
             }
+        };
+        this.createDefaultModal = function (content) {
+            _this.createModal();
+        };
+        this.createFormModal = function (content, submitSelector) {
+            _this.createModal();
         };
         this.sendRequest = function (e) {
             var form = e.currentTarget.closest('form');
@@ -190,9 +189,10 @@ var Modal = /** @class */ (function () {
             });
         }); };
         this.type = type.toUpperCase();
+        this.options = options;
         switch (this.type) {
             case 'FORM':
-                this.createFormModal(options.url, options.content, options.submitSelector);
+                this.createFormModal(options.content, options.submitSelector);
                 break;
             case 'MODAL':
                 this.createDefaultModal(options.content);

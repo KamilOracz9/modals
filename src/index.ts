@@ -1,6 +1,5 @@
 interface Options{
-    content: string | object;
-    url: string;
+    content: string | object;    
     submitSelector: string;
 }
 
@@ -22,17 +21,17 @@ class Modal implements ModalInterface
         buttonSelector = '',
         type = '',
         options = {
-            url: '',
             content: null,
             submitSelector: null,
         },
     } = {})
     {
         this.type = type.toUpperCase();
+        this.options = options;
 
         switch(this.type){
             case 'FORM': 
-                this.createFormModal(options.url, options.content, options.submitSelector);
+                this.createFormModal(options.content, options.submitSelector);
                 break;
             case 'MODAL': 
                 this.createDefaultModal(options.content);
@@ -52,33 +51,25 @@ class Modal implements ModalInterface
             if(!this.buttons.length) console.error('The modal open button does not exist');
             else{
                 this.buttons.forEach(button => {
-                    button.addEventListener('click', this.openModal);
+                    button.addEventListener('click', e => this.openModal(e));
                 });
             }
         }
     }
 
-    openModal = (): void => {
+    openModal = (e: Event): void => {
         $(this.modal).modal('show');
-    }
 
-    createDefaultModal = (content: string | object): void => {
-        this.createModal();
-
-        this.setContent(content);
-    }
-
-    createFormModal = (url: string, content: string | object, submitSelector: string): void => {
-        this.createModal();
+        const url = e.currentTarget.dataset.url;
 
         if(url){
             this.getHtmlForm(url).then(html => {
                 this.setContent(html);
 
-                if(!submitSelector){
+                if(!this.options.submitSelector){
                     console.error('Submit selector is not defined');
                 }else{
-                    const submitButtons = this.modal.querySelectorAll(submitSelector);
+                    const submitButtons = this.modal.querySelectorAll(this.options.submitSelector);
         
                     if(!submitButtons.length){
                         console.error('Submit selector does not exisit');
@@ -90,12 +81,12 @@ class Modal implements ModalInterface
                 }
             });
         }else{
-            this.setContent(content);
+            this.setContent(this.options.content);
 
-            if(!submitSelector){
+            if(!this.options.submitSelector){
                 console.error('Submit selector is not defined');
             }else{
-                const submitButtons = this.modal.querySelectorAll(submitSelector);
+                const submitButtons = this.modal.querySelectorAll(this.options.submitSelector);
     
                 if(!submitButtons.length){
                     console.error('Submit selector does not exisit');
@@ -106,6 +97,14 @@ class Modal implements ModalInterface
                 }
             }
         }
+    }
+
+    createDefaultModal = (content: string | object): void => {
+        this.createModal();
+    }
+
+    createFormModal = (content: string | object, submitSelector: string): void => {
+        this.createModal();
     }
 
     sendRequest = (e: Event): void => {

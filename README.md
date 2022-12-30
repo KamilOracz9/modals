@@ -10,6 +10,14 @@ Via CDN: https://cdn.jsdelivr.net/gh/KamilOracz9/modals@1.0.5/dist/index.js
 
 ## Configuration
 
+### Add data-url attribute to buttons opening modal
+
+```html
+
+<button data-url="Some url" class=".open-modal">Open modal</button>
+
+```
+
 ```javascript
 
 new Modal({
@@ -17,7 +25,6 @@ new Modal({
     type: '', // Type of modal (form / modal), default modal
     options: {
       content: '', // Modal content (string / html element)
-      url: '', // Url to route returning view (if null, options.content will be injected)
       submitSelector: '', // If selected type is form, this button send request to backend
     }
 });
