@@ -10,7 +10,7 @@ Via CDN: https://cdn.jsdelivr.net/gh/KamilOracz9/modals@1.0.5/dist/index.js
 
 ## Configuration
 
-### Add data-url attribute to buttons opening modal
+##### Add data-url attribute to buttons opening modal
 
 ```html
 

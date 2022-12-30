@@ -28,6 +28,7 @@ class Modal implements ModalInterface
     {
         this.type = type.toUpperCase();
         this.options = options;
+        this.buttonSelector = buttonSelector;
 
         switch(this.type){
             case 'FORM': 
@@ -40,13 +41,13 @@ class Modal implements ModalInterface
                 this.createDefaultModal(options.content);
                 break;
         }
-        this.initOpenModalButtons(buttonSelector);
+        this.initOpenModalButtons();
     }
 
-    initOpenModalButtons = (buttonSelector: string): void => {
-        if(!buttonSelector) console.error('The modal open button is not defined');
+    initOpenModalButtons = (): void => {
+        if(!this.buttonSelector) console.error('The modal open button is not defined');
         else{
-            this.buttons = document.querySelectorAll(buttonSelector);
+            this.buttons = document.querySelectorAll(this.buttonSelector);
 
             if(!this.buttons.length) console.error('The modal open button does not exist');
             else{
@@ -157,9 +158,15 @@ class Modal implements ModalInterface
     }
 
     createModal = (): void => {
-        const modalId = Date.now().toString();
+        let modalId = Date.now().toString();
 
-        document.body.innerHTML += `
+        if(document.getElementById(modalId)){
+            modalId = (parseInt(modalId) + 100).toString();
+        }
+
+        const modal = document.createElement('div');
+
+        modal.innerHTML = `
             <div class="modal fade" id="${modalId}" tabindex="-1" role="dialog" aria-hidden="true">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
@@ -168,6 +175,8 @@ class Modal implements ModalInterface
                 </div>
             </div>
         `;
+
+        document.body.append(modal);
 
         this.modal = document.getElementById(modalId);
     }

@@ -1,0 +1,66 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+  <script src="https://kit.fontawesome.com/411dc79c58.js" crossorigin="anonymous"></script>
+</head>
+<body>
+    <button type="button" class="btn btn-primary open-modal" data-url="">
+        Launch demo modal
+    </button>
+
+    <button type="button" class="btn btn-primary open-modal" data-url="http://127.0.0.1:8000/products/questions/create">
+        Launch demo modal
+    </button>
+
+    <button type="button" class="btn btn-primary open-second-modal" data-url="http://127.0.0.1:8000/products/questions/create">
+        Launch second demo modal
+    </button>
+
+    <button type="button" class="btn btn-primary open-second-modal" data-url="http://127.0.0.1:8000/products/questions/create">
+        Launch second demo modal
+    </button>
+
+    <button type="button" class="btn btn-primary open-3-modal">
+        Launch second demo modal
+    </button>
+
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery-ui@1.13.2/dist/jquery-ui.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+    <script src="./index.js"></script>
+    <script>
+        const modal1 = new Modal({
+            buttonSelector: '.open-modal', // Buttons opening modal
+            type: '', // Type of modal (form / modal), default modal
+            options: {
+                content: 'asdasdasd', // Modal content (string / html element)
+                submitSelector: '', // If selected type is form, this button send request to backend
+            }
+        });
+
+        const modal2 = new Modal({
+            buttonSelector: '.open-second-modal', // Buttons opening modal
+            type: 'form', // Type of modal (form / modal), default modal
+            options: {
+                content: '', // Modal content (string / html element)
+                submitSelector: '.create-submit', // If selected type is form, this button send request to backend
+            }
+        });
+
+        const modal3 = new Modal({
+            buttonSelector: '.open-3-modal', // Buttons opening modal
+            type: '', // Type of modal (form / modal), default modal
+            options: {
+                content: 'dfgdfgdfgdfg', // Modal content (string / html element)
+            }
+        });
+    </script>
+</body>
+</html>
