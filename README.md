@@ -1,6 +1,6 @@
-# Example
+##### config
 
-const modal = new Modal({
+new Modal({
   buttonSelector: '', // Buttons opening modal
   type: '', // Type of modal (form / modal), default modal
   options: {
